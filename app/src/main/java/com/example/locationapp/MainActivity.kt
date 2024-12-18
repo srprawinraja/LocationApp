@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ){
                     val context= LocalContext.current
-                    val locationUtils=LocationUtils()
+                    val locationUtils=LocationUtils(context)
                     val locationViewModel : LocationViewModel by viewModels()
                     Main(context, locationUtils, locationViewModel)
                 }
@@ -53,6 +53,7 @@ class MainActivity : ComponentActivity() {
 }
 @Composable
 fun DisplayLocation(context: Context, locationUtils: LocationUtils, locationViewModel: LocationViewModel){
+    var location = locationViewModel.location.value
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions(),
     ) {permission->
@@ -74,9 +75,15 @@ fun DisplayLocation(context: Context, locationUtils: LocationUtils, locationView
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
+        if(location!=null){
+            location.let {
+                Text(text = "longitute is ${it.longitude} and latitude is ${it.latitude} \n \"${locationUtils.getAddress(location)}")
+            }
+        }
+        Text(text = "")
         Button(onClick = {
-            if(locationUtils.isLocationPermitted(context)){
-                // got location permission
+            if(locationUtils.isLocationPermitted()){
+                locationUtils.setTheCurrentLocation(locationViewModel)
             } else {
                 launcher.launch(
                     arrayOf(
