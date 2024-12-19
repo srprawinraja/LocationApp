@@ -41,6 +41,7 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
+
     }
     packaging {
         resources {
@@ -50,6 +51,22 @@ android {
 }
 
 dependencies {
+
+    implementation ("com.mapbox.search:autofill:2.5.0")
+    implementation ("com.mapbox.search:discover:2.5.0")
+    implementation ("com.mapbox.search:place-autocomplete:2.5.0")
+    implementation("com.mapbox.search:offline:2.5.0")
+    implementation ("com.mapbox.search:mapbox-search-android:2.5.0")
+    implementation ("com.mapbox.search:mapbox-search-android-ui:2.5.0")
+
+
+
+
+
+    implementation("com.mapbox.maps:android:11.9.0")
+    // If you're using compose also add the compose extension
+    implementation("com.mapbox.extension:maps-compose:11.9.0")
+
     implementation("com.google.android.gms:play-services-location:21.0.1")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

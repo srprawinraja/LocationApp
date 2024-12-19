@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.os.Looper
+import android.util.Log
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -25,6 +26,8 @@ class LocationUtils(val context: Context) {
                 super.onLocationResult(location)
                 location.lastLocation?.let {
                     val locationData=LocationData(it.latitude, it.longitude)
+                    Log.i("location of the user in model", locationData.toString())
+
                     viewModel.updateLocation(locationData)
                 }
             }
@@ -37,7 +40,7 @@ class LocationUtils(val context: Context) {
                 ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED
     }
 
-    fun getAddress(latLng: LocationData):String{
+   /* fun getAddress(latLng: LocationData):String{
         val geoCoder=Geocoder(context, Locale.getDefault())
         val coordinates = LatLng(latLng.latitude, latLng.longitude)
         val addresses =geoCoder.getFromLocation(coordinates.latitude, coordinates.longitude, 1)
@@ -46,6 +49,6 @@ class LocationUtils(val context: Context) {
         } else{
             addresses[0].getAddressLine(0)
         }
-    }
+    }*/
 
 }
