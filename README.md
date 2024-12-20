@@ -17,17 +17,17 @@ Before setting up and run vdning the project, ensure that you have the following
 To use the Maps SDK, you need to create and configure your Mapbox credentials.
 
 #### Step 1: Log in/Sign up for a Mapbox Account
-###### 1. If you haven’t done so already, sign up for a Mapbox account at [Mapbox](https://www.mapbox.com/), then log in.
+##### 1. If you haven’t done so already, sign up for a Mapbox account at [Mapbox](https://www.mapbox.com/), then log in.
 
 
 #### Step 2: Configure Your Public Token
 
-###### 1. Open your Android project in Android Studio.
-###### 2. Go to the `app/res/values` folder in your project.
-###### 3. Right-click on the folder and select **New > Values Resource File**.
-###### 4. Name the file `mapbox_access_token.xml` and click **OK**.
-###### 5. Add the following code snippet in the newly created file:
-###### 6. Replace YOUR_MAPBOX_ACCESS_TOKEN with your actual token from the Mapbox tokens page.
+##### 1. Open your Android project in Android Studio.
+##### 2. Go to the `app/res/values` folder in your project.
+##### 3. Right-click on the folder and select **New > Values Resource File**.
+##### 4. Name the file `mapbox_access_token.xml` and click **OK**.
+##### 5. Add the following code snippet in the newly created file:
+##### 6. Replace YOUR_MAPBOX_ACCESS_TOKEN with your actual token from the Mapbox tokens page.
 
     <?xml version="1.0" encoding="utf-8"?>
     <resources xmlns:tools="http://schemas.android.com/tools">
@@ -35,11 +35,11 @@ To use the Maps SDK, you need to create and configure your Mapbox credentials.
     </resources>
 
 #### Step 3: Configure Permissions
-###### 1. To access the user's location, add the necessary permissions to your AndroidManifest.xml:
+##### 1. To access the user's location, add the necessary permissions to your AndroidManifest.xml:
 
-###### 2. Open app/src/main/AndroidManifest.xml.
+##### 2. Open app/src/main/AndroidManifest.xml.
 
-###### 3. Add the following permissions:
+##### 3. Add the following permissions:
 
     <!-- Access to user's general location -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -50,9 +50,9 @@ To use the Maps SDK, you need to create and configure your Mapbox credentials.
 Now that your credentials are configured, it’s time to add the Mapbox dependency to your project.
 
 #### Step 1: Add Mapbox Maven Repository
-###### 1. Open your settings.gradle.kts file.
+##### 1. Open your settings.gradle.kts file.
 
-###### 2. Add the following Maven repository:
+##### 2. Add the following Maven repository:
 
     dependencyResolutionManagement {
         repositories {
@@ -63,15 +63,15 @@ Now that your credentials are configured, it’s time to add the Mapbox dependen
     }
 
 #### Step 2: Configure Gradle Files
-###### 1. Open your module-level build.gradle.kts file.
+##### 1. Open your module-level build.gradle.kts file.
 
-###### 2. Ensure that your minSdk version is set to 21 or higher
-###### 3. Add the Mapbox SDK dependency:
+##### 2. Ensure that your minSdk version is set to 21 or higher
+##### 3. Add the Mapbox SDK dependency:
 
         dependencies {
         implementation("com.mapbox.maps:android:11.9.0")        
         }
-###### 4. If you're using Jetpack Compose, add the Compose extension:
+##### 4. If you're using Jetpack Compose, add the Compose extension:
 
     android {
         buildFeatures {
