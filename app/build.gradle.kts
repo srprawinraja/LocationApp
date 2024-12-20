@@ -51,28 +51,32 @@ android {
 }
 
 dependencies {
+    // Mapbox dependencies
+    implementation("com.mapbox.maps:android:11.9.0")  // Mapbox SDK for Android
+    implementation("com.mapbox.extension:maps-compose:11.9.0")  // Mapbox Compose extension for Compose UI
 
+    // AndroidX and Jetpack dependencies
+    implementation(libs.androidx.core.ktx)  // Core KTX extensions for AndroidX
+    implementation(libs.androidx.lifecycle.runtime.ktx)  // Lifecycle components for KTX
+    implementation(libs.androidx.activity.compose)  // Activity Compose support
+    implementation(platform(libs.androidx.compose.bom))  // BOM for Compose dependencies
+    implementation(libs.androidx.ui)  // Compose UI library
+    implementation(libs.androidx.ui.graphics)  // Compose UI graphics
+    implementation(libs.androidx.ui.tooling.preview)  // Compose tooling support for previews
+    implementation(libs.androidx.material3)  // Material3 for Compose UI
 
+    // Google Play Services dependencies
+    implementation(libs.play.services.maps)  // Google Play services Maps SDK
+    implementation(libs.play.services.location)  // Google Play services Location SDK
 
-    implementation("com.mapbox.maps:android:11.9.0")
-    // If you're using compose also add the compose extension
-    implementation("com.mapbox.extension:maps-compose:11.9.0")
+    // Testing dependencies
+    testImplementation(libs.junit)  // JUnit for unit testing
+    androidTestImplementation(libs.androidx.junit)  // AndroidX JUnit for instrumented tests
+    androidTestImplementation(libs.androidx.espresso.core)  // Espresso for UI testing
+    androidTestImplementation(platform(libs.androidx.compose.bom))  // BOM for testing Compose
+    androidTestImplementation(libs.androidx.ui.test.junit4)  // Compose UI testing
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    implementation(libs.play.services.maps)
-    implementation(libs.play.services.location)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    // Debug dependencies for Compose tooling
+    debugImplementation(libs.androidx.ui.tooling)  // Compose tooling support
+    debugImplementation(libs.androidx.ui.test.manifest)  // Manifest for testing in debug builds
 }
