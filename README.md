@@ -4,9 +4,10 @@ LocationApp is an Android application that integrates with Mapbox and Google's L
 Prerequisites
 Before setting up and running the project, ensure that you have the following:
 
-Android Studio (or any compatible IDE for Android development)
-An Android device or emulator for testing
-A Mapbox account for accessing the Mapbox API
+    Android Studio (or any compatible IDE for Android development)
+    An Android device or emulator for testing
+    Mapbox account for accessing the Mapbox API
+    
 Setup Guide
 Part 1: Create and Configure Your Credentials
 To use the Maps SDK, you need to create and configure your Mapbox credentials.
