@@ -52,6 +52,7 @@ To use the Maps SDK, you need to create and configure your Mapbox credentials.
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- Access to precise location (if needed) -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+&nbsp;  
 
 ### Part 2: Add Mapbox SDK Dependency
 Now that your credentials are configured, it’s time to add the Mapbox dependency to your project.
