@@ -19,6 +19,8 @@ To use the Maps SDK, you need to create and configure your Mapbox credentials.
 #### Step 1: Log in/Sign up for a Mapbox Account
 ##### 1. If you haven’t done so already, sign up for a Mapbox account at [Mapbox](https://www.mapbox.com/), then log in.
 
+&nbsp;  
+
 
 #### Step 2: Configure Your Public Token
 
@@ -33,6 +35,8 @@ To use the Maps SDK, you need to create and configure your Mapbox credentials.
     <resources xmlns:tools="http://schemas.android.com/tools">
         <string name="mapbox_access_token" translatable="false" tools:ignore="UnusedResources">YOUR_MAPBOX_ACCESS_TOKEN</string>
     </resources>
+
+&nbsp;  
 
 #### Step 3: Configure Permissions
 ##### 1. To access the user's location, add the necessary permissions to your AndroidManifest.xml:
@@ -62,6 +66,9 @@ Now that your credentials are configured, it’s time to add the Mapbox dependen
         }
     }
 
+&nbsp;  
+
+
 #### Step 2: Configure Gradle Files
 ##### 1. Open your module-level build.gradle.kts file.
 
@@ -86,6 +93,9 @@ Now that your credentials are configured, it’s time to add the Mapbox dependen
         implementation("com.mapbox.maps:android:11.9.0")
         implementation("com.mapbox.extension:maps-compose:11.9.0")
     }
+
+&nbsp;  
+
 
 #### Step 3: Sync Gradle Files
 
