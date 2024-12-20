@@ -16,6 +16,9 @@ Before setting up and run vdning the project, ensure that you have the following
 
 To use the Maps SDK, you need to create and configure your Mapbox credentials.
 
+&nbsp;  
+
+
 #### Step 1: Log in/Sign up for a Mapbox Account
 ##### 1. If you haven’t done so already, sign up for a Mapbox account at [Mapbox](https://www.mapbox.com/), then log in.
 
