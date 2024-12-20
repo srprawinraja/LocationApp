@@ -15,9 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LocationApp"
         tools:targetApi="31">
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBV2_EAmmI2P3l7AQjSuKua7ilmiU2dRLk"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
