@@ -1,6 +1,7 @@
 package com.example.locationapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,16 +16,17 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Set the content view of the app
         setContent {
-            LocationAppTheme {
+            LocationAppTheme { // Apply the custom theme to the app
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    modifier = Modifier.fillMaxSize(), // Ensure the surface fills the entire screen
+                    color = MaterialTheme.colorScheme.background // Set the background color based on theme
                 ) {
+                    // Display the view using the current context
                     DisplayView(LocalContext.current)
                 }
             }
         }
     }
-
 }

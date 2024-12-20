@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -37,97 +36,108 @@ import com.mapbox.maps.plugin.PuckBearing
 import com.mapbox.maps.plugin.locationcomponent.createDefault2DPuck
 import com.mapbox.maps.plugin.locationcomponent.location
 
-
 @SuppressLint("UnrememberedMutableState")
 @Composable
-fun DisplayView(context: Context){
+fun DisplayView(context: Context) {
+    // Initialize map viewport state for controlling the map view
     val mapViewportState = rememberMapViewportState()
+
+    // Get location and connectivity managers
     val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+    // Remember the fused location provider client (used for getting device location)
     remember { LocationServices.getFusedLocationProviderClient(context) }
 
-
+    // Launcher for requesting permissions
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions(),
-    ) {permission->
-        if(permission[Manifest.permission.ACCESS_COARSE_LOCATION]==true
-            && permission[Manifest.permission.ACCESS_FINE_LOCATION]==true){
+    ) { permission ->
+        // Check if required location permissions are granted
+        if (permission[Manifest.permission.ACCESS_COARSE_LOCATION] == true
+            && permission[Manifest.permission.ACCESS_FINE_LOCATION] == true) {
+            // If permissions granted, start following the user's location
             mapViewportState.transitionToFollowPuckState()
         } else {
-            if(ActivityCompat.shouldShowRequestPermissionRationale(context as MainActivity, Manifest.permission.ACCESS_FINE_LOCATION)
-                && ActivityCompat.shouldShowRequestPermissionRationale(context, Manifest.permission.ACCESS_FINE_LOCATION)){
-                Toast.makeText(context,"Location Permission is required for this app to work", Toast.LENGTH_LONG).show()
+            // Handle case where location permission is denied
+            if (ActivityCompat.shouldShowRequestPermissionRationale(context as MainActivity, Manifest.permission.ACCESS_FINE_LOCATION)
+                && ActivityCompat.shouldShowRequestPermissionRationale(context, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                Toast.makeText(context, "Location Permission is required for this app to work", Toast.LENGTH_LONG).show()
             } else {
-                Toast.makeText(context,"enable location permission in setting", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Enable location permission in settings", Toast.LENGTH_LONG).show()
             }
         }
-
     }
-    Box (
-        modifier = Modifier.fillMaxSize()
-    ){
 
+    // Box to contain the map and the location button
+    Box(modifier = Modifier.fillMaxSize()) {
+
+        // Mapbox Map with defined viewport state
         MapboxMap(
             Modifier.fillMaxSize(),
             mapViewportState = mapViewportState
         ) {
             MapEffect(Unit) { mapView ->
+                // Update location settings for the map view
                 mapView.location.updateSettings {
-                    locationPuck = createDefault2DPuck(withBearing = true)
+                    locationPuck = createDefault2DPuck(withBearing = true)  // Use puck with bearing enabled
                     enabled = true
-                    puckBearing = PuckBearing.COURSE
+                    puckBearing = PuckBearing.COURSE  // Set puck to follow course direction
                     puckBearingEnabled = true
                 }
+                // Transition to follow the puck (user's location) on the map
                 mapViewportState.transitionToFollowPuckState()
             }
         }
 
+        // IconButton for the user to request location permissions or interact with the map
         IconButton(
             modifier = Modifier
-                .align(Alignment.BottomEnd)  // Align to the bottom-end
-                .padding(start = 10.dp, end = 50.dp, bottom = 90.dp, top = 10.dp)
-                .background(Color.Cyan, shape = CircleShape)  // Blue background with circular shape
-                .padding(5.dp),  // Inner padding for the icon
-                onClick = {
-                    if(!isLocationPermitted(context)){
-                        launcher.launch(
-                            arrayOf(
-                                Manifest.permission.ACCESS_FINE_LOCATION,
-                                Manifest.permission.ACCESS_COARSE_LOCATION
-                            )
+                .align(Alignment.BottomEnd)  // Align button to the bottom-right of the screen
+                .padding(start = 10.dp, end = 50.dp, bottom = 90.dp, top = 10.dp)  // Add padding around the button
+                .background(Color.Cyan, shape = CircleShape)  // Set a cyan background with circular shape for the button
+                .padding(5.dp),  // Inner padding for the icon itself
+            onClick = {
+                // If location permission is not granted, request permissions
+                if (!isLocationPermitted(context)) {
+                    launcher.launch(
+                        arrayOf(
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
                         )
-                    } else if(!locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
-                        Toast.makeText(context,"please enable location", Toast.LENGTH_LONG).show()
-                    } else if(!isInternetAvailable(connectivityManager)){
-                        Toast.makeText(context,"enable mobile data", Toast.LENGTH_LONG).show()
-                    } else {
-                        mapViewportState.transitionToFollowPuckState()
-                    }
+                    )
+                } else if (!locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                    // If location provider is not enabled, show a message
+                    Toast.makeText(context, "Please enable location", Toast.LENGTH_LONG).show()
+                } else if (!isInternetAvailable(connectivityManager)) {
+                    // If there's no internet connection, prompt user to enable mobile data
+                    Toast.makeText(context, "Enable mobile data", Toast.LENGTH_LONG).show()
+                } else {
+                    // If everything is okay, start following the puck (location)
+                    mapViewportState.transitionToFollowPuckState()
+                }
             }
         ) {
+            // Icon displayed inside the button (location icon)
             Icon(
                 imageVector = Icons.Default.LocationOn,
-                contentDescription = "Location Icon",
-                tint = Color.Black,  // Black icon color
-                modifier = Modifier.size(30.dp)  // Icon size
+                contentDescription = "Location Icon",  // Description for accessibility
+                tint = Color.Black,  // Set icon color to black
+                modifier = Modifier.size(30.dp)  // Set icon size
             )
         }
     }
 }
 
-fun isLocationPermitted(context: Context):Boolean{
-    return ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)== PackageManager.PERMISSION_GRANTED&&
-            ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED
+// Helper function to check if location permissions are granted
+fun isLocationPermitted(context: Context): Boolean {
+    return ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
 }
 
+// Helper function to check if internet is available
 fun isInternetAvailable(connectivityManager: ConnectivityManager): Boolean {
     val network = connectivityManager.activeNetwork ?: return false
     val networkCapabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
-    return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+    return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)  // Check if internet capability is available
 }
-
-
-
-
-
-
